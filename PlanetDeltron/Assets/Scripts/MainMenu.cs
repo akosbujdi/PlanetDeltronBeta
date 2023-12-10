@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
     //takes user to github repo
     public void OpenGit()
     {
-        Application.ExternalEval("window.open(\"https://github.com/akosbujdi/PlanetDeltron\")");
+        Application.ExternalEval("window.open(\"https://github.com/akosbujdi/PlanetDeltronBeta\")");
     }
     //on click function used to pause and resume music in the main menu 
     public void stopMusic(){
