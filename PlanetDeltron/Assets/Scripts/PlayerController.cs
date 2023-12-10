@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public TMP_Text distanceRan;
     public TMP_Text finalScore;
     [SerializeField] TextMeshProUGUI highestScore;
+    private PlayerAudio playerAudio;
     public GameObject gameOverScreen;
     private Animator playerAnim;
 
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         // Get components of player
         playerAnim = GetComponent<Animator>();
         myCharacterController = GetComponent<CharacterController>();
+        playerAudio = GameObject.Find("Player").GetComponent<PlayerAudio>();
     }
 
     // Update is called once per frame
@@ -73,6 +75,7 @@ public class PlayerController : MonoBehaviour
                 // If player is on ground, and the jump or slide button is pressed whilst it's not on cooldown do:
                 if (jump && canJumpOrSlide)
                 {
+                    playerAudio.source.PlayOneShot(playerAudio.up);
                     createJumpSpark();
                     playerAnim.SetTrigger("Jump_Trig");
                     // Add vertical velocity (jump)
@@ -83,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (slide && canJumpOrSlide)
                 {
+                    playerAudio.source.PlayOneShot(playerAudio.down);
                     // Change players height and center to allow it to slide under obstacle
                     createSlideDust();
                     myCharacterController.height = 0.5f;
@@ -181,6 +185,10 @@ public class PlayerController : MonoBehaviour
             distanceUnit++;
             // Destroy tile after 5 seconds
             StartCoroutine(destroyTile(other.gameObject));
+        } else if (other.CompareTag("Alien"))
+        {
+            playerAnim.SetTrigger("Death_Trig");
+            gameOver();
         }
     }
     IEnumerator destroyTile(GameObject tileToDestroy)

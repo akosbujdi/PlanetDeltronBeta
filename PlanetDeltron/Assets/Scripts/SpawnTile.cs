@@ -9,19 +9,21 @@ public class SpawnTile : MonoBehaviour
     public GameObject referenceObject;
     public GameObject slideTile;
     public GameObject jumpTile;
+    public GameObject alienTile;
     private GameObject tileToSpawn;
 
     private PlayerController playerController;
 
-    private float distanceBetweenTiles = 4.0f;
+    private float distanceBetweenTiles;
     private float randomValue = 0.8f;
-    private float obstacleValue = 0.9f;
+    private float obstacleValue = 0.85f;
     private int rotation = 0;
     public int numberOfTiles;
     public int numberOfTilesAtOneTime = 25;
 
     private bool lastTileWasObstacle = false;
     private bool firstTile = true;
+    private bool lastTileAlien = false;
 
     private Vector3 previousTilePosition;
     private Vector3 direction, mainDirection = new Vector3(0, 0, 1), otherDirection = new Vector3(1, 0, 0);
@@ -29,6 +31,7 @@ public class SpawnTile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        distanceBetweenTiles = 4.0f;
         // Get last tile position
         previousTilePosition = referenceObject.transform.position;
         // Get playerController script
@@ -65,17 +68,22 @@ public class SpawnTile : MonoBehaviour
 
                 // If obstacle odd > than obstacle value set tile to spawn to a random obstacle tile else spawn regular tile
                 float obstacleOdd = Random.value;
-                if (obstacleOdd >= obstacleValue && obstacleOdd < 1.0f - (1.0f - obstacleValue) / 2 && !lastTileWasObstacle)
+                if (obstacleOdd > obstacleValue && obstacleOdd <= 0.91f && !lastTileWasObstacle)
                 {
                     tileToSpawn = jumpTile;
                     lastTileWasObstacle = true;
                 }
-                else if (obstacleOdd >= 1.0f - (1.0f - obstacleValue) / 2 && !lastTileWasObstacle)
+                else if (obstacleOdd > obstacleValue && obstacleOdd <= 0.97f && !lastTileWasObstacle)
                 {
                     lastTileWasObstacle = true;
                     tileToSpawn = slideTile;
-                }
-                else
+                } else if (obstacleOdd > obstacleValue && obstacleOdd > 0.97f && !lastTileWasObstacle)
+                {
+                    lastTileWasObstacle = true;
+                    lastTileAlien = true;
+                    tileToSpawn = alienTile;
+                }  
+                else 
                 {
                     tileToSpawn = tile;
                     lastTileWasObstacle = false;
@@ -91,6 +99,15 @@ public class SpawnTile : MonoBehaviour
                 Vector3 spawnPos = previousTilePosition + distanceBetweenTiles * direction;
                 Instantiate(tileToSpawn, spawnPos, Quaternion.Euler(0, rotation, 0));
                 previousTilePosition = spawnPos;
+
+               if (lastTileAlien)
+                {
+                    distanceBetweenTiles = 16.0f;
+                    lastTileAlien = false;
+                } else
+                {
+                    distanceBetweenTiles = 4.0f;
+                }
             }
         }
     }

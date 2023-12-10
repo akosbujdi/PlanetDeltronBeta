@@ -13,13 +13,7 @@ public class PlayerAudio : MonoBehaviour
     /* if statements that register key pressed to play certain clips we assign in the editor.
     We do this for all of our turns, slides, and jumps */
     void Update(){
-        if(Input.GetKeyDown(KeyCode.DownArrow)){
-            source.PlayOneShot(down);
-        }
-        else if(Input.GetKeyDown(KeyCode.UpArrow)){
-            source.PlayOneShot(up);
-        }
-        else if(Input.GetKeyDown(KeyCode.LeftArrow)){
+        if(Input.GetKeyDown(KeyCode.LeftArrow)){
             source.PlayOneShot(left);
         }
         else if(Input.GetKeyDown(KeyCode.RightArrow)){

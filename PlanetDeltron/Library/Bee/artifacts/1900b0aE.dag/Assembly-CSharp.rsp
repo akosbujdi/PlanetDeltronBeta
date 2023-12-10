@@ -353,6 +353,8 @@
 -analyzer:"D:/Program Files/Unity Hub/2022.3.4f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"D:/Program Files/Unity Hub/2022.3.4f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 "Assets/Realistic Hail Set/Demo Scene/Scripts/DemoSceneController.cs"
+"Assets/Scripts/Alien.cs"
+"Assets/Scripts/AlienTile.cs"
 "Assets/Scripts/BackgroundAudio.cs"
 "Assets/Scripts/BackgroundView.cs"
 "Assets/Scripts/CameraFollow.cs"
